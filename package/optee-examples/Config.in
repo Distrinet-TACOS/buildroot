@@ -20,6 +20,57 @@ config BR2_PACKAGE_OPTEE_EXAMPLES
 
 	  https://github.com/linaro-swg/optee_examples
 
+
+
+if BR2_PACKAGE_OPTEE_EXAMPLES
+
+choice
+	prompt "OP-TEE Examples version"
+	default BR2_PACKAGE_OPTEE_EXAMPLES_LATEST
+	help
+	  Select the version of OP-TEE OS you want to use
+
+config BR2_PACKAGE_OPTEE_EXAMPLES_LATEST
+	bool "origin/master"
+	help
+	  Use the latest release tag from the OP-TEE OS official Git
+	  repository.
+
+config BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_GIT
+	bool "Custom Git repository"
+	help
+	  Use a custom version fetched from a Git repository.
+
+endchoice
+
+
+if BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_GIT
+
+config BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_REPO_URL
+	string "URL of custom repository"
+	depends on BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_GIT
+	help
+	  Specific location of the reference source tree Git
+	  repository.
+
+config BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_REPO_VERSION
+	string "Custom repository version"
+	depends on BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_GIT
+	help
+	  Revision to use in the typical format used by Git, i.e a
+	  SHA1 or a tag.
+
+endif
+
+config BR2_PACKAGE_OPTEE_EXAMPLES_VERSION
+	string
+	default "origin/master"	if BR2_PACKAGE_OPTEE_EXAMPLES_LATEST
+	default BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_REPO_VERSION \
+				if BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_GIT
+
+
+endif
+
 comment "optee-examples needs a toolchain w/ threads, dynamic library, headers >= 4.3"
 	depends on BR2_TARGET_OPTEE_OS
 	depends on !BR2_TOOLCHAIN_HAS_THREADS || BR2_STATIC_LIBS || \

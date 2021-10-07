@@ -4,10 +4,29 @@
 #
 ################################################################################
 
-OPTEE_EXAMPLES_VERSION = 3.13.0
-OPTEE_EXAMPLES_SITE = $(call github,linaro-swg,optee_examples,$(OPTEE_EXAMPLES_VERSION))
+
+OPTEE_EXAMPLES_SITE = $(call github,Distrinet-TACOS,optee_examples,$(OPTEE_EXAMPLES_VERSION))
 OPTEE_EXAMPLES_LICENSE = BSD-2-Clause
 OPTEE_EXAMPLES_LICENSE_FILES = LICENSE
+BR_NO_CHECK_HASH_FOR += $(OPTEE_EXAMPLES_SOURCE)
+
+
+
+ifeq ($(BR2_PACKAGE_OPTEE_EXAMPLES_LATEST), y)
+OPTEE_EXAMPLES_VERSION = origin/master
+else
+OPTEE_EXAMPLES_VERSION = $(call qstrip,$(BR2_PACKAGE_OPTEE_EXAMPLES_VERSION))
+endif
+
+
+
+ifeq ($(BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_GIT),y)
+OPTEE_EXAMPLES_SITE = $(call qstrip,$(BR2_PACKAGE_OPTEE_EXAMPLES_CUSTOM_REPO_URL))
+OPTEE_EXAMPLES_SITE_METHOD = git
+else
+OPTEE_EXAMPLES_SITE = $(call github,Distrinet-TACOS,optee_examples,$(OPTEE_EXAMPLES_VERSION))
+endif
+
 
 OPTEE_EXAMPLES_DEPENDENCIES = optee-client optee-os
 
