@@ -55,7 +55,7 @@ OPTEE_OS_MAKE_OPTS += $(call qstrip,$(BR2_TARGET_OPTEE_OS_ADDITIONAL_VARIABLES))
 # Requests OP-TEE OS to build from subdirectory out/ of its sourcetree
 # root path otherwise the output directory path depends on the target
 # platform name.
-OPTEE_OS_BUILDDIR_OUT = out
+OPTEE_OS_BUILDDIR_OUT = out/arm
 ifeq ($(BR2_aarch64),y)
 OPTEE_OS_LOCAL_SDK = $(OPTEE_OS_BUILDDIR_OUT)/export-ta_arm64
 OPTEE_OS_SDK = $(STAGING_DIR)/lib/optee/export-ta_arm64
