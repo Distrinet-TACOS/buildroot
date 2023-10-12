@@ -34,7 +34,7 @@ endif
 
 define OPTEE_RUST_EXAMPLES_BUILD_CMDS
 	@$(foreach f,$(wildcard $(@D)/examples/*/Makefile), \
-		printf "\n====== Building $f ======\n" && \
+		@printf "\n====== Building $f ======\n" && \
 		$(OPTEE_RUST_EXAMPLES_TC_PATH_ENV) $(MAKE) -C $(dir $f)
 	)
 endef
